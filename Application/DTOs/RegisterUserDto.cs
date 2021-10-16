@@ -17,6 +17,6 @@ namespace Application.DTOs
         public string Nationality { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
-        public DateTime? BirthDay { get; set; }
+        public DateTime BirthDay { get; set; }
     }
 }
