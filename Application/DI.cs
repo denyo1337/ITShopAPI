@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Application.Middleware;
 using Application.Services;
 using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -16,6 +17,7 @@ namespace Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
+            services.AddScoped<ErrorHandlingMiddleware>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());

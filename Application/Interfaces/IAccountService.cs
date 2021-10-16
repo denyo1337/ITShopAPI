@@ -10,5 +10,7 @@ namespace Application.Interfaces
     public interface IAccountService
     {
         Task RegisterUser(RegisterUserDto dto);
+        Task<string> GenerateJWT(LoginUserDto dto);
+       
     }
 }
