@@ -1,6 +1,7 @@
 ﻿using Application.DTOs;
 using FluentValidation;
 using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Infrastructure.Validators
 {
     public class RegosterUserDtoValidator : AbstractValidator<RegisterUserDto>
     {
-        public RegosterUserDtoValidator(ITShopDbContext context)
+        public RegosterUserDtoValidator(ITShopDbContext dbcontext)
         {
             RuleFor(x => x.Email)
                 .NotEmpty()
@@ -27,7 +28,7 @@ namespace Infrastructure.Validators
                 {
                     if (value.Value.ToString().Length != 9)
                     {
-                        context.AddFailure("PhoneNumber", "Numer telefonu składa się z 9 cyfr.");
+                        context.AddFailure("PhoneNumber", "Numer telefonu musi składać się z 9 cyfr.");
                     }
                 });
             RuleFor(x => x.Password)
@@ -36,7 +37,22 @@ namespace Infrastructure.Validators
             RuleFor(x => x.ConfirmPassword)
                 .Equal(e => e.Password);
             RuleFor(x => x.BirthDay)
-                .Must(e => e.Value.GetType() == typeof(DateTime));
+                .Must(BeAValidDate).WithMessage("Podano zły format daty");
+
+            RuleFor(x => x.Email)
+                .Custom((value, context) =>
+{
+                    var emailInUse = dbcontext.Users.Any(u => u.Email == value);
+                    if (emailInUse)
+                    {
+                        context.AddFailure("Email", "Ten Email jest już zajęty.");
+
+                    }
+                });
+        }
+        private bool BeAValidDate(DateTime date)
+        {
+            return !date.Equals(default(DateTime));
         }
     }
 }
