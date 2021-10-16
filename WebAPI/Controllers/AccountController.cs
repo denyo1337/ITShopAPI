@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.DTOs;
+using Application.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +13,16 @@ namespace WebAPI.Controllers
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
-        public AccountController()
+        private readonly IAccountService _service;
+        public AccountController(IAccountService service)
         {
-                
+            _service = service;
         }
-
-        public async Task<IActionResult> Register()
+        [HttpPost]
+        [Route("signup")]
+        public async Task<IActionResult> Register([FromBody] RegisterUserDto dto)
         {
-
+            await _service.RegisterUser(dto);
             return Ok();
         }
     }

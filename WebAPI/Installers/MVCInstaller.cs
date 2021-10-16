@@ -7,7 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using FluentValidation;
+using FluentValidation.AspNetCore;
 namespace WebAPI.Installers
 {
     public class MVCInstaller : IInstaller
@@ -16,7 +17,7 @@ namespace WebAPI.Installers
         {
             services.AddInfrastructure();
             services.AddApplication();
-            services.AddControllers();
+            services.AddControllers().AddFluentValidation();
         }
     }
 }
