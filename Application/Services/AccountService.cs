@@ -40,6 +40,10 @@ namespace Application.Services
             {
                 throw new UserNotFoundException("Podałeś zły login lub hasło");
             }
+            if (user.IsBanned == true)
+            {
+                throw new BannedAccountException("Twoje konto zostało zablokowane");
+            }
             var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
 
             if(result == PasswordVerificationResult.Failed)
