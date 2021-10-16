@@ -1,0 +1,2 @@
+# ITShopAPI
+Studies project. 
