@@ -12,6 +12,8 @@ namespace Application.DTOs
     {
         public string Email { get; set; }
         public string Name { get; set; }
+        public string NickName { get; set; }
+
         public string SurrName { get; set; }
         public int? PhoneNumber { get; set; }
         public string Nationality { get; set; }
