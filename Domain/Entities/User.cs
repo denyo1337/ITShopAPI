@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class User : AuditableEntity
+    public class User : AuditableEntity, IEntity
     {
         public int Id { get; set; }
         [Required]
@@ -22,7 +23,7 @@ namespace Domain.Entities
         public int? PhoneNumber { get; set; }
         public string Nationality { get; set; }
         public string PasswordHash { get; set; }
-        public DateTime? BirthDay { get; set; }
+        public DateTime BirthDay { get; set; }
         public virtual Role Role { get; set; }
         public int RoleId { get; set; }
 
