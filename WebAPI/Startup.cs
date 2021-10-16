@@ -34,7 +34,7 @@ namespace WebAPI
             var authenticationSettings = new AuthenticationSettings();
 
             Configuration.GetSection("Authentication").Bind(authenticationSettings);
-
+            services.AddHttpContextAccessor();
             services.AddSingleton(authenticationSettings);
             services.AddAuthentication(option =>
             {
@@ -56,8 +56,9 @@ namespace WebAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Seeder seeder)
         {
+            seeder.SeedUsers();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -66,6 +67,7 @@ namespace WebAPI
             }
 
             app.UseMiddleware<ErrorHandlingMiddleware>();
+            app.UseAuthentication();
             app.UseHttpsRedirection();
 
             app.UseRouting();

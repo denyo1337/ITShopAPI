@@ -30,7 +30,6 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> Login([FromBody] LoginUserDto dto)
         {
             var key = await _service.GenerateJWT(dto);
-
             return Ok(key);
         }
     }

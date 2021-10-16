@@ -17,10 +17,12 @@ namespace Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddScoped<ErrorHandlingMiddleware>();
-            services.AddScoped<IAccountService, AccountService>();
-            services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddScoped<ErrorHandlingMiddleware>();
+            services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IAdminService, AdminService>();
+            services.AddScoped<IUserContextService, UserContextService>();
             return services;
         }
     }

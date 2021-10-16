@@ -78,11 +78,13 @@ namespace Application.Services
                 NickName = dto.NickName,
                 Created = DateTime.Now.ToLocalTime(),
                 RoleId = 1,
+                IsBanned = false
             };
 
             var passwordHash = _passwordHasher.HashPassword(newUser, dto.Password);
             newUser.PasswordHash = passwordHash;
             await _repository.AddUser(newUser);
         }
+        
     }
 }

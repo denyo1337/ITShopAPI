@@ -36,6 +36,5 @@ namespace Infrastructure.Repositories
             var isTaken = await _context.Users.AnyAsync(x => x.NickName == nick);
             return isTaken;
         }
-
     }
 }

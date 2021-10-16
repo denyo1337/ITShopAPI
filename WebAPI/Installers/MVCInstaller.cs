@@ -15,6 +15,7 @@ namespace WebAPI.Installers
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
+            services.AddScoped<Seeder>();
             services.AddInfrastructure();
             services.AddApplication();
             services.AddControllers().AddFluentValidation();

@@ -21,6 +21,11 @@ namespace Application.Middleware
                 context.Response.StatusCode = 404;
                 await context.Response.WriteAsync(notfound.Message);
             }
+            catch(EmptyListException emptyList)
+            {
+                context.Response.StatusCode = 404;
+                await context.Response.WriteAsync(emptyList.Message);
+            }
             catch (Exception e)
             {
                 context.Response.StatusCode = 500;
