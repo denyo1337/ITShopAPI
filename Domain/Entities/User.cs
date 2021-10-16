@@ -9,12 +9,11 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class User : AuditableEntity, IEntity
+    public class User : AuditableEntity
     {
         public int Id { get; set; }
         [Required]
         public string Email { get; set; }
-        [Required]
         public string NickName { get; set; }
         [Required]
         public string Name { get; set; }
@@ -26,6 +25,6 @@ namespace Domain.Entities
         public DateTime BirthDay { get; set; }
         public virtual Role Role { get; set; }
         public int RoleId { get; set; }
-
+        public ICollection<Address> Addresses { get; set; }
     }
 }

@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Validators
 {
-    public class RegosterUserDtoValidator : AbstractValidator<RegisterUserDto>
+    public class RegisterUserDtoValidator : AbstractValidator<RegisterUserDto>
     {
-        public RegosterUserDtoValidator(ITShopDbContext dbcontext)
+        public RegisterUserDtoValidator(ITShopDbContext dbcontext)
         {
             RuleFor(x => x.Email)
                 .NotEmpty()

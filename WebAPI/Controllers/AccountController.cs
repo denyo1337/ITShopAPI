@@ -25,5 +25,13 @@ namespace WebAPI.Controllers
             await _service.RegisterUser(dto);
             return Ok();
         }
+        [HttpPost]
+        [Route("signin")]
+        public async Task<IActionResult> Login([FromBody] LoginUserDto dto)
+        {
+            var key = await _service.GenerateJWT(dto);
+
+            return Ok(key);
+        }
     }
 }
