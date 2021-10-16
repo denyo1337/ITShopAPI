@@ -1,6 +1,7 @@
 ﻿using Application.DTOs;
 using Application.Exceptions;
 using Application.Interfaces;
+using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -21,12 +22,15 @@ namespace Application.Services
         private readonly IAccountRepository _repository;
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly AuthenticationSettings _authenticationSettings;
-        public AccountService(IAccountRepository repository, IPasswordHasher<User> passwordHasher, AuthenticationSettings authenticationSettings)
+        private readonly IUserContextService _userContextService;
+        private readonly IMapper _mapper;
+        public AccountService(IAccountRepository repository, IPasswordHasher<User> passwordHasher, AuthenticationSettings authenticationSettings, IUserContextService userContextService, IMapper mapper)
         {
             _repository = repository;
             _passwordHasher = passwordHasher;
             _authenticationSettings = authenticationSettings;
-
+            _userContextService = userContextService;
+            _mapper = mapper;
         }
 
         public async Task<string> GenerateJWT(LoginUserDto dto)
@@ -85,6 +89,25 @@ namespace Application.Services
             newUser.PasswordHash = passwordHash;
             await _repository.AddUser(newUser);
         }
-        
+        public async Task<AccountDetailsDto> GetMyAccountDetails()
+        {
+            var userId = (int)_userContextService.GetUserId;
+            var myuserDetails = await _repository.GetMyDetails(userId);
+            return _mapper.Map<AccountDetailsDto>(myuserDetails);
+        }
+
+        public async Task<IEnumerable<Address>> GetAddresses()
+        {
+            var userId = (int)_userContextService.GetUserId;
+            var myaddresses = await _repository.GetMyAddresses(userId);
+
+            return myaddresses;
+        }
+        public async Task<Address> GetMyAddressById(int addressId)
+        {
+            var userId = (int)_userContextService.GetUserId;
+            var myaddress = await _repository.GetAddress(userId, addressId);
+            return myaddress;
+        }
     }
 }

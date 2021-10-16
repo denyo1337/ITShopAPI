@@ -1,5 +1,6 @@
 ﻿using Application.DTOs;
 using Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -18,19 +19,35 @@ namespace WebAPI.Controllers
         {
             _service = service;
         }
-        [HttpPost]
-        [Route("signup")]
+        [HttpGet("details")]
+        [Authorize]
+        public async Task<IActionResult> MyAccountDetails()
+        {
+            return Ok(await _service.GetMyAccountDetails());
+        }
+        [HttpGet("details/addresses")]
+        [Authorize]
+        public async Task<IActionResult> GetMyAddresses()
+        {
+            return Ok(await _service.GetAddresses());
+        }
+        [HttpGet("details/addresses/{id}")]
+        [Authorize]
+        public async Task<IActionResult> GetAddressById([FromRoute] int id)
+        {
+            return Ok(await _service.GetMyAddressById(id));
+        }
+
+        [HttpPost("signin")]
+        public async Task<IActionResult> Login([FromBody] LoginUserDto dto)
+        {
+            return Ok(await _service.GenerateJWT(dto));
+        }
+        [HttpPost("signup")]
         public async Task<IActionResult> Register([FromBody] RegisterUserDto dto)
         {
             await _service.RegisterUser(dto);
             return Ok();
-        }
-        [HttpPost]
-        [Route("signin")]
-        public async Task<IActionResult> Login([FromBody] LoginUserDto dto)
-        {
-            var key = await _service.GenerateJWT(dto);
-            return Ok(key);
         }
     }
 }

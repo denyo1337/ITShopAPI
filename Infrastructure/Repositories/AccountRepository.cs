@@ -24,17 +24,35 @@ namespace Infrastructure.Repositories
         }
 
         public async Task<User> FindUserByNickOrEmail(string data)
-        {
-            var user = await _context.Users
-                .Include(x=>x.Role)
+        { 
+            return await _context.Users
+                .Include(x => x.Role)
                 .FirstOrDefaultAsync(x => x.Email == data || x.NickName == data);
-            return user;
+        }
+
+        public async Task<IEnumerable<Address>> GetMyAddresses(int id)
+        {
+            return await _context.Addresses
+                .Where(x => x.UserId == id)
+                .ToListAsync();
+        }
+        public async Task<Address> GetAddress(int userId,int addressId )
+        {
+            return await _context.Addresses
+                .Where(x => x.UserId == userId)
+                .FirstOrDefaultAsync(x => x.Id == addressId);
+        }
+
+        public async Task<User> GetMyDetails(int id)
+        {
+            return await _context.Users.
+                FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<bool> IsNickTaken(string nick)
         {
-            var isTaken = await _context.Users.AnyAsync(x => x.NickName == nick);
-            return isTaken;
+            return await _context.Users.
+                AnyAsync(x => x.NickName == nick);
         }
     }
 }

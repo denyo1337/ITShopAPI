@@ -34,6 +34,12 @@ namespace WebAPI
                     _context.Roles.AddRange(roles);
                     _context.SaveChanges();
                 }
+                if (!_context.Users.Any())
+                {
+                    var users = CreateUsersWithAddresses();
+                    _context.Users.AddRange(users);
+                    _context.SaveChanges();
+                }
                 var admin = _context.Users.FirstOrDefault(x => x.Email == "admin@gmail.com");
                 if(admin == null)
                 {
@@ -80,6 +86,81 @@ namespace WebAPI
             _context.Users.Add(newAdmin);
             _context.SaveChanges();
         }
-      
+        private List<User> CreateUsersWithAddresses()
+        {
+            List<User> users = new()
+            {
+                new User()
+                {
+                    Name = "Karol",
+                    SurrName = "Karolewski",
+                    NickName = "Karol",
+                    Email = "karol@gmail.com",
+                    RoleId = 2,
+                    BirthDay = DateTime.Now,
+                    Created = DateTime.Now,
+                    IsBanned = false,
+                    Nationality = "Polska",
+                    PhoneNumber = 555333555,
+                    Addresses = new List<Address>(){
+                        new Address()
+                            {
+                                Towm = "Olsztyn",
+                                Street = "Prosta 33",
+                                PostalCode = "10-109",
+                                Country = "Polska",
+                                Created = DateTime.Now
+                            },
+                          new Address()
+                            {
+                                Towm = "Barczewo",
+                                Street = "Krzywa 33",
+                                PostalCode = "11-109",
+                                Country = "Polska",
+                                Created = DateTime.Now
+                            }
+                    }
+                },
+                new User()
+                {
+                    Name = "Marek",
+                    SurrName = "Karolewski",
+                    NickName = "marek",
+                    Email = "marek@gmail.com",
+                    RoleId = 1,
+                    BirthDay = DateTime.Now,
+                    Created = DateTime.Now,
+                    IsBanned = false,
+                    Nationality = "Polska",
+                    PhoneNumber = 555333555,
+                    Addresses = new List<Address>(){
+                        new Address()
+                            {
+                                Towm = "Warszawa",
+                                Street = "Skośna 33",
+                                PostalCode = "90-119",
+                                Country = "Polska",
+                                Created = DateTime.Now
+                            },
+                          new Address()
+                            {
+                                Towm = "Barczewo",
+                                Street = "Krzywa 33",
+                                PostalCode = "11-109",
+                                Country = "Polska",
+                                Created = DateTime.Now
+                            }
+                    }
+                }
+            };
+
+            foreach (var user in users)
+            {
+                var hash = _passwordHasher.HashPassword(user, "password");
+                user.PasswordHash = hash;
+            }
+
+            return users;
+        }
     }
 }
