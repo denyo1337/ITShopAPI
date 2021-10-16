@@ -15,5 +15,6 @@ namespace Application.Interfaces
         Task<AccountDetailsDto> GetMyAccountDetails();
         Task<IEnumerable<Address>> GetAddresses();
         Task<Address> GetMyAddressById(int addressId);
+        Task<int> AddAddress(AddressDto dto);
     }
 }

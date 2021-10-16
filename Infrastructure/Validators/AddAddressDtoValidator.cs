@@ -1,4 +1,5 @@
 ﻿using Application.DTOs;
+using Application.Exceptions;
 using FluentValidation;
 using Infrastructure.Data;
 using System;
@@ -20,15 +21,21 @@ namespace Infrastructure.Validators
                 .NotEmpty()
                 .MaximumLength(200);
             RuleFor(x => x.PostalCode)
+                .Length(6)
+                .WithMessage("Podany zły format kodu pocztowego")
                 .Custom((value, context) =>
                 {
                     int leftParse = 0;
+                    if (!value.Contains("-"))
+                    {
+                        throw new BadFormatException("Podano zły format kodu pocztowego");
+                    }
                     var parts = value.Split("-");
                     var leftSide = int.TryParse(parts[0], out leftParse);
                     var rightSide = int.TryParse(parts[1], out leftParse);
-                    if (!value.Contains("-") && parts[0].Length>2 && parts[1].Length>3 && leftSide && rightSide)
-                    {    
-                        context.AddFailure("Podany zły format kodu pocztowego");
+                    if (parts[0].Length!=2 || parts[1].Length!=3 || !leftSide || !rightSide)
+                    {
+                        throw new BadFormatException("Podano zły format kodu pocztowego");
                     }
                 });
             RuleFor(x => x.Country)

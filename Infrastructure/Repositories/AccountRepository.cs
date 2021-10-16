@@ -54,5 +54,13 @@ namespace Infrastructure.Repositories
             return await _context.Users.
                 AnyAsync(x => x.NickName == nick);
         }
+
+        public async Task<Address> AddAddress(Address address, int userId)
+        {
+            address.UserId = userId;
+            _context.Addresses.Add(address);
+            await _context.SaveChangesAsync();
+            return address;
+        }
     }
 }

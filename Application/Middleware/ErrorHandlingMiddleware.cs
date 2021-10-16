@@ -31,6 +31,11 @@ namespace Application.Middleware
                 context.Response.StatusCode = 403;
                 await context.Response.WriteAsync(banned.Message);
             }
+            catch(BadFormatException format)
+            {
+                context.Response.StatusCode = 400;
+                await context.Response.WriteAsync(format.Message);
+            }
             catch (Exception e)
             {
                 context.Response.StatusCode = 500;

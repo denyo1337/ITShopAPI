@@ -113,5 +113,14 @@ namespace Application.Services
             var myaddress = await _repository.GetAddress(userId, addressId);
             return myaddress;
         }
+
+        public async Task<int> AddAddress(AddressDto dto)
+        {
+            var userId = (int)_userContextService.GetUserId;
+            var mapped = _mapper.Map<Address>(dto);
+            var address = await _repository.AddAddress(mapped, userId);
+
+            return address.Id;
+        }
     }
 }

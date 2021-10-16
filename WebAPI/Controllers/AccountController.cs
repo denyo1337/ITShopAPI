@@ -49,5 +49,12 @@ namespace WebAPI.Controllers
             await _service.RegisterUser(dto);
             return Ok();
         }
+        [HttpPost("details/addresses/add")]
+        [Authorize]
+        public async Task<IActionResult> AddAddress([FromBody] AddressDto dto)
+        {
+            var addresId = await _service.AddAddress(dto);
+            return Created($"/api/details/addresses/{addresId}", null);
+        }
     }
 }

@@ -15,5 +15,6 @@ namespace Domain.Interfaces
         Task<User> GetMyDetails(int id);
         Task<IEnumerable<Address>> GetMyAddresses(int id);
         Task<Address> GetAddress(int userId, int addressId);
+        Task<Address> AddAddress(Address address, int userId);
     }
 }
