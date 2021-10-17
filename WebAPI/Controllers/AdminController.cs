@@ -49,7 +49,7 @@ namespace WebAPI.Controllers
 
             return NoContent();
         }
-        [HttpPut("users/{id}/set-role={roleId}")]
+        [HttpPut("users/{id}/set-role/{roleId}")]
         [SwaggerOperation(Summary = "Admin może zmienić role użytkownikowi.")]
         public async Task<IActionResult> UpdateUserRole([FromRoute]int id, [FromRoute] int roleId)
         {

@@ -16,6 +16,7 @@ namespace Infrastructure
         {
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IAdminRepository, AdminRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
             return services;
         }
     }

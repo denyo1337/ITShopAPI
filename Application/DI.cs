@@ -22,6 +22,7 @@ namespace Application
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IAdminService, AdminService>();
+            services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IUserContextService, UserContextService>();
             return services;
         }
