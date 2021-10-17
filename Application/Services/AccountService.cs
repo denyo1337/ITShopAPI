@@ -44,6 +44,11 @@ namespace Application.Services
             {
                 throw new BannedAccountException("Twoje konto zostało zablokowane");
             }
+            if(user.IsActive == false)
+            {
+                throw new BannedAccountException("Twoje konto nie istnieje lub jest nieaktywne");
+            }
+
             var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
 
             if(result == PasswordVerificationResult.Failed)
@@ -86,7 +91,8 @@ namespace Application.Services
                 NickName = dto.NickName,
                 Created = DateTime.Now.ToLocalTime(),
                 RoleId = 1,
-                IsBanned = false
+                IsBanned = false,
+                IsActive = true
             };
 
             var passwordHash = _passwordHasher.HashPassword(newUser, dto.Password);
@@ -151,9 +157,18 @@ namespace Application.Services
 
         }
 
+        public async Task DeactivateAccount(DeactivateAccountDto dto)
+        {
+            var userid = GetUserId();
+            if (dto.Password != dto.ConfirmPassword)
+                throw new WrongPasswordException("Hasła nie są identyczne");
+
+            await _repository.SetIsActiveToFalse(userid);
+        }
         private int GetUserId()
         {
             return (int)_userContextService.GetUserId;
         }
+
     }
 }

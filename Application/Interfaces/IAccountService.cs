@@ -17,5 +17,6 @@ namespace Application.Interfaces
         Task<GetAddressesDto> GetMyAddressById(int addressId);
         Task<int> AddAddress(AddressDto dto);
         Task EditProfileDetails(ProfileDetailsDto dto);
+        Task DeactivateAccount(DeactivateAccountDto dto);
     }
 }

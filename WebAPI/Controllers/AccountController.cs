@@ -71,5 +71,13 @@ namespace WebAPI.Controllers
             await _service.EditProfileDetails(dto);
             return NoContent();
         }
+        [HttpDelete]
+        [Authorize]
+        [SwaggerOperation(Summary ="Umożliwia 'usunięcie konta', zmienia status konta isActive=false")]
+        public async Task<IActionResult> DeleteMyAccount([FromBody] DeactivateAccountDto dto )
+        {
+            await _service.DeactivateAccount(dto);
+            return NoContent();
+        }
     }
 }

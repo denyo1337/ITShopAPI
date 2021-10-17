@@ -17,11 +17,12 @@ namespace Application.DTOs
         public string SurrName { get; set; }
         public int? PhoneNumber { get; set; }
         public string Nationality { get; set; }
-        public DateTime BirthDay { get; set; }
+        public string BirthDay { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<User, AccountDetailsDto>();
+            profile.CreateMap<User, AccountDetailsDto>()
+                .ForMember(x=>x.BirthDay,s=>s.MapFrom(y=>y.BirthDay.ToString("dd/MM/yyyy")));
         }
     }
 }

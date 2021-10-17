@@ -19,7 +19,7 @@ namespace WebAPI
             _context = context;
             _passwordHasher = passwordHasher;
         }
-        public void SeedUsers()
+        public void Seed()
         {
             if (_context.Database.CanConnect())
 {
@@ -102,6 +102,7 @@ namespace WebAPI
                     IsBanned = false,
                     Nationality = "Polska",
                     PhoneNumber = 555333555,
+                    IsActive = true,
                     Addresses = new List<Address>(){
                         new Address()
                             {
@@ -133,6 +134,7 @@ namespace WebAPI
                     IsBanned = false,
                     Nationality = "Polska",
                     PhoneNumber = 555333555,
+                    IsActive = true,
                     Addresses = new List<Address>(){
                         new Address()
                             {

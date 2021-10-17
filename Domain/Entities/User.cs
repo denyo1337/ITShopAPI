@@ -2,6 +2,7 @@
 using Domain.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -27,5 +28,7 @@ namespace Domain.Entities
         public int RoleId { get; set; }
         public ICollection<Address> Addresses { get; set; }
         public bool IsBanned { get; set; }
+        [DefaultValue("true")]
+        public bool IsActive { get; set; }
     }
 }

@@ -71,5 +71,12 @@ namespace Infrastructure.Repositories
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
         }
+
+        public async Task SetIsActiveToFalse(int id)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            user.IsActive = false;
+            await _context.SaveChangesAsync();
+        }
     }
 }
