@@ -8,7 +8,7 @@ namespace Application.DTOs.Enums
 {
     public enum ProductTypeEnum
     {
-        SoftWare,
-        HardWare
+        Software,
+        Hardware
     }
 }

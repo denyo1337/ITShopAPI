@@ -1,4 +1,6 @@
-﻿using Application.DTOs.ProductDtos.ProductDto;
+﻿using Application.DTOs.Enums;
+using Application.DTOs.ProductDtos.ProductDto;
+using Application.Exceptions;
 using Application.Interfaces;
 using AutoMapper;
 using Domain.Entities;
@@ -31,6 +33,7 @@ namespace Application.Services
                 Description = dto.Description,
                 Amount = dto.Amount,
                 Price = dto.Price,
+                ProductType = dto.ProductType,
                 Created = DateTime.Now.ToLocalTime(),
                 Modified = DateTime.Now.ToLocalTime(),
             };

@@ -26,9 +26,9 @@ namespace WebAPI.Controllers
         [Authorize(Roles ="Admin,Employee")]
         public async Task<IActionResult> AddProduct([FromBody] ProductDto dto)
         {
-            await _service.AddProduct(dto);
+            var id = await _service.AddProduct(dto);
 
-            return Created("", null);
+            return Created($"api/product/{id}", null);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Application.DTOs.ProductDtos.ProductDto;
+﻿using Application.DTOs.Enums;
+using Application.DTOs.ProductDtos.ProductDto;
 using FluentValidation;
 using Infrastructure.Data;
 using System;
@@ -25,11 +26,13 @@ namespace Infrastructure.Validators
                     }
                 });
             RuleFor(x => x.Amount)
-                .Must(x => x.Value < 0).WithMessage("Ilość produktu nie może być ujemna");
+                .Must(x => x.Value > 0).WithMessage("Ilość produktu nie może być ujemna");
             RuleFor(x => x.Price)
-                .Must(x => x.Value < 0).WithMessage("Wartość produktu nie może być ujemna");
+                .Must(x => x.Value > 0).WithMessage("Wartość produktu nie może być ujemna");
             RuleFor(x => x.Description)
                 .MaximumLength(500);
+            RuleFor(x => x.ProductType)
+                .IsEnumName(typeof(ProductTypeEnum)).WithMessage("Wybrano zły productType, prawidłowe to: Software, Hardware");
 
         }
     }
