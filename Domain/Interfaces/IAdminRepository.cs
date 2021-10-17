@@ -11,5 +11,9 @@ namespace Domain.Interfaces
     {
         Task<IEnumerable<User>> GetUsers();
         Task<User> GetUser(int id);
+        Task<int> CreateUser(User user);
+        Task SetIsBanned(User user, bool flag);
+        Task ChangeRoleForUser(User user);
+        Task DeleteUser(User user);
     }
 }

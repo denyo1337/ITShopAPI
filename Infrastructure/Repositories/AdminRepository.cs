@@ -18,6 +18,25 @@ namespace Infrastructure.Repositories
             _context = context;
         }
 
+        public async Task ChangeRoleForUser(User user)
+        {
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> CreateUser(User user)
+        {
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+            return user.Id;
+        }
+
+        public async Task DeleteUser(User user)
+        {
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<User> GetUser(int id)
         {
             return await _context.Users
@@ -32,6 +51,13 @@ namespace Infrastructure.Repositories
                 .Include(x => x.Role)
                 .Include(x=>x.Addresses)
                 .ToListAsync();
+        }
+
+        public async Task SetIsBanned(User user, bool flag)
+        {
+            user.IsBanned = flag;
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -19,6 +19,7 @@ namespace WebAPI.Installers
             services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
             services.AddScoped<IValidator<AddressDto>, AddAddressDtoValidator>();
             services.AddScoped<IValidator<ProfileDetailsDto>, ProfileDetailsDtoValidator>();
+            services.AddScoped<IValidator<CreateUserDto>, CreateUserDtoValidator>();
         }
     }
 }

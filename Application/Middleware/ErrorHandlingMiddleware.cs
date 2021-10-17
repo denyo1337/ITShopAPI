@@ -46,6 +46,11 @@ namespace Application.Middleware
                 context.Response.StatusCode = 403;
                 await context.Response.WriteAsync(wrongPassword.Message);
             }
+            catch(BadRequestException badRequest)
+            {
+                context.Response.StatusCode = 403;
+                await context.Response.WriteAsync(badRequest.Message);
+            }
             catch (Exception e)
             {
                 context.Response.StatusCode = 500;

@@ -57,17 +57,16 @@ namespace Infrastructure.Validators
                 .Must(BeAValidAge).WithMessage("Data musi być w formacie {dd/MM/yyyy}");
         }
         private bool BeAValidAge(DateTime? date)
+        {
+            int currentYear = DateTime.Now.Year;
+            int dobYear = date.Value.Year;
 
+            if (dobYear <= currentYear && dobYear > (currentYear - 120))
             {
-                int currentYear = DateTime.Now.Year;
-                int dobYear = date.Value.Year;
-
-                if (dobYear <= currentYear && dobYear > (currentYear - 120))
-                {
                     return true;
-                }
-
-                return false;
             }
+            
+            return false;
+        }
     }
 }

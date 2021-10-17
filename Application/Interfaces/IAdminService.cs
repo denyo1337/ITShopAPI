@@ -11,5 +11,9 @@ namespace Application.Interfaces
     {
         Task<IEnumerable<UsersDto>> GetUsers();
         Task<UsersDto> GetUsers(int id);
+        Task<int> CreateUser(CreateUserDto dto);
+        Task BanOrUnbanUser(int id, bool flag);
+        Task PromoteUser(int id, int roleId);
+        Task DeleteUser(int id);
     }
 }
