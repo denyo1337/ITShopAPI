@@ -95,32 +95,65 @@ namespace Application.Services
         }
         public async Task<AccountDetailsDto> GetMyAccountDetails()
         {
-            var userId = (int)_userContextService.GetUserId;
+            var userId = GetUserId();
             var myuserDetails = await _repository.GetMyDetails(userId);
             return _mapper.Map<AccountDetailsDto>(myuserDetails);
         }
 
-        public async Task<IEnumerable<Address>> GetAddresses()
+        public async Task<IEnumerable<GetAddressesDto>> GetAddresses()
         {
-            var userId = (int)_userContextService.GetUserId;
+            var userId = GetUserId();
             var myaddresses = await _repository.GetMyAddresses(userId);
-
-            return myaddresses;
+            return _mapper.Map<IEnumerable<GetAddressesDto>>(myaddresses);
         }
-        public async Task<Address> GetMyAddressById(int addressId)
+        public async Task<GetAddressesDto> GetMyAddressById(int addressId)
         {
-            var userId = (int)_userContextService.GetUserId;
+            var userId = GetUserId();
             var myaddress = await _repository.GetAddress(userId, addressId);
-            return myaddress;
+            var mapped = _mapper.Map<GetAddressesDto>(myaddress);
+            return mapped;
         }
 
         public async Task<int> AddAddress(AddressDto dto)
         {
-            var userId = (int)_userContextService.GetUserId;
+            var userId = GetUserId();
             var mapped = _mapper.Map<Address>(dto);
             var address = await _repository.AddAddress(mapped, userId);
 
             return address.Id;
+        }
+
+        public async Task EditProfileDetails(ProfileDetailsDto dto)
+        {
+            var userId = GetUserId();
+            var account = await _repository.GetMyDetails(userId);
+
+            if(dto.BirthDay != null)
+                account.BirthDay = (DateTime)dto.BirthDay;
+            if (!string.IsNullOrWhiteSpace(dto.Name))
+                account.Name = dto.Name;
+            if (!string.IsNullOrWhiteSpace(dto.SurrName))
+                account.SurrName = dto.SurrName;
+            if (!string.IsNullOrWhiteSpace(dto.Nationality))
+                account.Nationality = dto.Nationality;
+            if(!string.IsNullOrWhiteSpace(dto.NickName))
+            {
+                var isTaken = await _repository.IsNickTaken(dto.NickName);
+                if (isTaken)
+                    throw new NickNameAlreadyTakenException($"Pseudonim '{dto.NickName}' jest już zajęty");
+            }
+            if (dto.PhoneNumber != null)
+                account.PhoneNumber = dto.PhoneNumber;
+
+            account.Modified = DateTime.Now.ToLocalTime();
+
+            await _repository.UpdateAccountDetails(account);
+
+        }
+
+        private int GetUserId()
+        {
+            return (int)_userContextService.GetUserId;
         }
     }
 }

@@ -32,9 +32,10 @@ namespace Infrastructure.Repositories
 
         public async Task<IEnumerable<Address>> GetMyAddresses(int id)
         {
-            return await _context.Addresses
+            var list = await _context.Addresses
                 .Where(x => x.UserId == id)
                 .ToListAsync();
+            return list.OrderByDescending(x=>x.Created);
         }
         public async Task<Address> GetAddress(int userId,int addressId )
         {
@@ -58,9 +59,17 @@ namespace Infrastructure.Repositories
         public async Task<Address> AddAddress(Address address, int userId)
         {
             address.UserId = userId;
+            address.Modified = DateTime.Now.ToLocalTime();
+            address.Created = DateTime.Now.ToLocalTime();
             _context.Addresses.Add(address);
             await _context.SaveChangesAsync();
             return address;
+        }
+
+        public async Task UpdateAccountDetails(User user)
+        {
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
         }
     }
 }

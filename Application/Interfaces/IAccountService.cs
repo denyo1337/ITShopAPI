@@ -13,8 +13,9 @@ namespace Application.Interfaces
         Task RegisterUser(RegisterUserDto dto);
         Task<string> GenerateJWT(LoginUserDto dto);
         Task<AccountDetailsDto> GetMyAccountDetails();
-        Task<IEnumerable<Address>> GetAddresses();
-        Task<Address> GetMyAddressById(int addressId);
+        Task<IEnumerable<GetAddressesDto>> GetAddresses();
+        Task<GetAddressesDto> GetMyAddressById(int addressId);
         Task<int> AddAddress(AddressDto dto);
+        Task EditProfileDetails(ProfileDetailsDto dto);
     }
 }
