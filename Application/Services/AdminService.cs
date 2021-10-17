@@ -74,7 +74,7 @@ namespace Application.Services
             var myId = _userContextService.GetUserId;
             if (myId == id)
             {
-                throw new BadRequestException("Nie możesz zbanować samego siebie");
+                throw new BadRequestException("Nie możesz usunąć samego siebie");
             }
             var user = await _repository.GetUser(id);
             if (user == null)
