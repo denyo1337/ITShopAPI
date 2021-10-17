@@ -1,4 +1,5 @@
 ﻿using Application.DTOs;
+using Application.DTOs.ProductDtos.ProductDto;
 using FluentValidation;
 using Infrastructure.Validators;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +21,7 @@ namespace WebAPI.Installers
             services.AddScoped<IValidator<AddressDto>, AddAddressDtoValidator>();
             services.AddScoped<IValidator<ProfileDetailsDto>, ProfileDetailsDtoValidator>();
             services.AddScoped<IValidator<CreateUserDto>, CreateUserDtoValidator>();
+            services.AddScoped<IValidator<ProductDto>, ProductDtoValidator>();
         }
     }
 }

@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Application.DTOs.ProductDtos.ProductDto;
+using Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +15,20 @@ namespace WebAPI.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        public ProductController()
+        private readonly IProductService _service;
+        public ProductController(IProductService service)
         {
+            _service = service;
+        }
 
+        [HttpPost("add")]
+        [SwaggerOperation(Summary = "Umożliwia dodanie produktu, role = [Admin,Employee]")]
+        [Authorize(Roles ="Admin,Employee")]
+        public async Task<IActionResult> AddProduct([FromBody] ProductDto dto)
+        {
+            await _service.AddProduct(dto);
+
+            return Created("", null);
         }
     }
 }

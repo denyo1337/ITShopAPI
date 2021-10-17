@@ -1,4 +1,5 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Entities;
+using Domain.Interfaces;
 using Infrastructure.Data;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,13 @@ namespace Infrastructure.Repositories
         public ProductRepository(ITShopDbContext context)
         {
             _context = context;
+        }
+
+        public async Task<int> AddNewProduct(Product product)
+        {
+            _context.Products.Add(product);
+            await _context.SaveChangesAsync();
+            return product.Id;
         }
     }
 }

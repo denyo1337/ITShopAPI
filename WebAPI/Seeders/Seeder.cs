@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.DTOs.Enums;
+using Domain.Entities;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +41,12 @@ namespace WebAPI
                     _context.Users.AddRange(users);
                     _context.SaveChanges();
                 }
+                if (!_context.Products.Any())
+                {
+                    var products = CreateProducts();
+                    _context.Products.AddRange(products);
+                    _context.SaveChanges();
+                }
                 var admin = _context.Users.FirstOrDefault(x => x.Email == "admin@gmail.com");
                 if(admin == null)
                 {
@@ -47,7 +54,6 @@ namespace WebAPI
                 }
             }
         }
-
         private IEnumerable<Role> GetRoles()
         {
             var roles = new List<Role>()
@@ -86,7 +92,7 @@ namespace WebAPI
             _context.Users.Add(newAdmin);
             _context.SaveChanges();
         }
-        private List<User> CreateUsersWithAddresses()
+        private IEnumerable<User> CreateUsersWithAddresses()
         {
             List<User> users = new()
             {
@@ -164,5 +170,54 @@ namespace WebAPI
 
             return users;
         }
+        private IEnumerable<Product> CreateProducts()
+        {
+            List<Product> products = new()
+            {
+                new Product()
+                {
+                    Name = "Procesor",
+                    Description = "Procesor komputerowy",
+                    Amount = 100,
+                    Price = 1300.30,
+                    ProductType = "Hardware",
+                    Created = DateTime.Now.ToLocalTime(),
+                    Modified = DateTime.Now.ToLocalTime(),
+                },
+                new Product()
+                {
+                    Name = "Karta graficzna",
+                    Description = "Karta graficzna",
+                    Amount = 20,
+                    Price = 300.50,
+                    ProductType = ProductTypeEnum.SoftWare.ToString(),
+                    Created = DateTime.Now.ToLocalTime(),
+                    Modified = DateTime.Now.ToLocalTime(),
+                },
+                new Product()
+                {
+                    Name = "Monitor",
+                    Description = "Monitor komputerowy",
+                    Amount = 50,
+                    Price = 499.99,
+                    ProductType = ProductTypeEnum.SoftWare.ToString(),
+                    Created = DateTime.Now.ToLocalTime(),
+                    Modified = DateTime.Now.ToLocalTime(),
+                },
+                new Product()
+                {
+                    Name = "AntyVirus",
+                    Description = "Program antiwirusowy",
+                    Amount = 200,
+                    Price = 30,
+                    ProductType = ProductTypeEnum.SoftWare.ToString(),
+                    Created = DateTime.Now.ToLocalTime(),
+                    Modified = DateTime.Now.ToLocalTime(),
+                }
+                
+            };
+            return products;
+        }
+
     }
 }

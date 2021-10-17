@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Application.DTOs.ProductDtos.ProductDto;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace Application.Interfaces
 {
     public interface IProductService
     {
-        
+        Task<int> AddProduct(ProductDto dto);
     }
 }
