@@ -28,15 +28,19 @@ namespace Infrastructure.Validators
                     int leftParse = 0;
                     if (!value.Contains("-"))
                     {
-                        throw new BadFormatException("Podano zły format kodu pocztowego");
+                        context.AddFailure("Brak znaku '-' w kodzie pocztowym.");
                     }
-                    var parts = value.Split("-");
-                    var leftSide = int.TryParse(parts[0], out leftParse);
-                    var rightSide = int.TryParse(parts[1], out leftParse);
-                    if (parts[0].Length!=2 || parts[1].Length!=3 || !leftSide || !rightSide)
+                    else
                     {
-                        throw new BadFormatException("Podano zły format kodu pocztowego");
+                        var parts = value.Split("-");
+                        var leftSide = int.TryParse(parts[0], out leftParse);
+                        var rightSide = int.TryParse(parts[1], out leftParse);
+                        if (parts[0].Length != 2 || parts[1].Length != 3 || !leftSide || !rightSide)
+                        {
+                            context.AddFailure("Zły format kodu pocztowego.");
+                        }
                     }
+                  
                 });
             RuleFor(x => x.Country)
                 .NotEmpty()
