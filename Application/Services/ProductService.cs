@@ -1,8 +1,10 @@
 ﻿using Application.DTOs.Enums;
+using Application.DTOs.ProductDtos;
 using Application.DTOs.ProductDtos.ProductDto;
 using Application.Exceptions;
 using Application.Interfaces;
 using AutoMapper;
+using Domain.Common;
 using Domain.Entities;
 using Domain.Interfaces;
 using System;
@@ -39,6 +41,58 @@ namespace Application.Services
             };
 
             return await _repository.AddNewProduct(newProduct);
+        }
+        public async Task<PageResult<ProductDto>> GetProducts(ProductsQuery query)
+        {
+            var products = await _repository.GetProducts(query);
+            if (products == null)
+                throw new EmptyListException("Brak produktów do wyświetlenia");
+
+            var totalCount = products.Count();
+
+            products = products
+                .Skip(query.PageSize * (query.PageNumber - 1))
+                .Take(query.PageSize);
+
+            var productDto = _mapper.Map<IEnumerable<ProductDto>>(products);
+
+            return new PageResult<ProductDto>(productDto, totalCount, query.PageSize, query.PageNumber);
+        }
+        public async Task<ProductDto> GetProductById(int productId)
+        {
+            var product = await _repository.GetProductbyId(productId);
+            if (product == null)
+                throw new NotFoundException($"Product o id {productId} nie istnieje");
+
+            return _mapper.Map<ProductDto>(product);
+        }
+
+        public async Task UpdateProduct(int productId, UpdateProductDto dto)
+        {
+            var product = await _repository.GetProductbyId(productId);
+            if (product == null)
+                throw new NotFoundException($"Product o id {productId} nie istnieje");
+
+            if (!string.IsNullOrWhiteSpace(dto.Description))
+                product.Description = dto.Description;
+            if (!string.IsNullOrWhiteSpace(dto.Name))
+                product.Name = dto.Name;
+            if (dto.Price != null)
+                product.Price = dto.Price;
+            if (dto.Amount != null)
+                product.Amount = dto.Amount;
+
+            product.Modified = DateTime.Now.ToLocalTime();
+
+            await _repository.UpdateProduct(product);
+        }
+
+        public async Task DeleteProduct(int productId)
+        {
+            var product = await _repository.GetProductbyId(productId);
+            if (product == null)
+                throw new NotFoundException($"Product o id {productId} nie istnieje");
+            await _repository.DeleteProduct(product);
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Application.Services
             }
             var user = await _repository.GetUser(id);
             if (user == null)
-                throw new UserNotFoundException($"Użytkownik o id {id} nie istnieje");
+                throw new NotFoundException($"Użytkownik o id {id} nie istnieje");
             if (user.IsBanned == true && flag == true)
                 throw new BadFormatException("Użytkownik jest już zablokowany");
             if (user.IsBanned == false && flag == false)
@@ -79,7 +79,7 @@ namespace Application.Services
             var user = await _repository.GetUser(id);
             if (user == null)
             {
-                throw new UserNotFoundException($"Użytkownik o id:{id} nie istnieje");
+                throw new NotFoundException($"Użytkownik o id:{id} nie istnieje");
             }
             await _repository.DeleteUser(user);
         }
@@ -100,7 +100,7 @@ namespace Application.Services
             var user = await _repository.GetUser(id);
             if (user == null)
             {
-                throw new UserNotFoundException($"Użytkownik o id:{id} nie istnieje");
+                throw new NotFoundException($"Użytkownik o id:{id} nie istnieje");
             }
             return _mapper.Map<UsersDto>(user);
         }
@@ -110,7 +110,7 @@ namespace Application.Services
             var user =  await _repository.GetUser(id);
             if (user == null)
             {
-                throw new UserNotFoundException($"Użytkownik o id:{id} nie istnieje");
+                throw new NotFoundException($"Użytkownik o id:{id} nie istnieje");
             }
             if(roleId > 3 || roleId < 1)
             {

@@ -16,7 +16,7 @@ namespace Application.Middleware
             {
                 await next.Invoke(context);
             }
-            catch(UserNotFoundException notfound)
+            catch(NotFoundException notfound)
             {
                 context.Response.StatusCode = 404;
                 await context.Response.WriteAsync(notfound.Message);

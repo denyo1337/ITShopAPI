@@ -38,7 +38,7 @@ namespace Application.Services
             var user = await _repository.FindUserByNickOrEmail(dto.Login);
             if(user == null)
             {
-                throw new UserNotFoundException("Podałeś zły login lub hasło");
+                throw new WrongPasswordException("Podałeś zły login lub hasło");
             }
             if (user.IsBanned == true)
             {
@@ -46,14 +46,14 @@ namespace Application.Services
             }
             if(user.IsActive == false)
             {
-                throw new BannedAccountException("Twoje konto nie istnieje lub jest nieaktywne");
+                throw new BannedAccountException("To konto nie istnieje lub jest nieaktywne");
             }
 
             var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
 
             if(result == PasswordVerificationResult.Failed)
             {
-                throw new UserNotFoundException("Podałeś zły login lub hasło");
+                throw new WrongPasswordException("Podałeś zły login lub hasło");
             }
 
             var claims = new List<Claim>()

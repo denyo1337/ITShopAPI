@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Application.Exceptions
 {
-    public class UserNotFoundException : Exception
+    public class NotFoundException : Exception
     {
-        public UserNotFoundException(string msg):base(msg)
+        public NotFoundException(string msg):base(msg)
         {
 
         }
