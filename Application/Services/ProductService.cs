@@ -10,6 +10,7 @@ using Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -49,6 +50,24 @@ namespace Application.Services
                 throw new EmptyListException("Brak produktów do wyświetlenia");
 
             var totalCount = products.Count();
+
+            if (!string.IsNullOrEmpty(query.SortBy))
+            {
+                var columnsSelectors = new Dictionary<string, Expression<Func<Product, object>>>
+                {
+                    {nameof(Product.Name), r=>r.Name },
+                    {nameof(Product.Amount), r=>r.Amount },
+                    {nameof(Product.Price), r=>r.Price }
+                };
+                var selectedColumn = columnsSelectors[query.SortBy];
+
+                products = query.SortDirection == SortDirection.ASC ? products.AsQueryable().OrderBy(selectedColumn)
+                    : products.AsQueryable().OrderByDescending(selectedColumn);
+            }
+            else
+            {
+                products = products.OrderBy(x => x.Name);
+            }
 
             products = products
                 .Skip(query.PageSize * (query.PageNumber - 1))

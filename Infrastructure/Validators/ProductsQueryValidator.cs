@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Entities;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace Infrastructure.Validators
     public class ProductsQueryValidator : AbstractValidator<ProductsQuery>
     {
         private int[] allowedPageSizes = new[] { 5, 10, 20, 50 };
+        private string[] allowedSortByColumnNames = { nameof(Product.Name), nameof(Product.Amount), nameof(Product.Price)};
         public ProductsQueryValidator()
         {
             RuleFor(x => x.PageNumber)
@@ -23,6 +25,9 @@ namespace Infrastructure.Validators
                         context.AddFailure("PageSize", $"PageSize musi zawierać się [{string.Join(",", allowedPageSizes)}]");
                     }
                 });
+            RuleFor(x => x.SortBy)
+                .Must(value => string.IsNullOrEmpty(value) || allowedSortByColumnNames.Contains(value))
+                .WithMessage($"SortBy jest opcjonalne lub musi zawierać wartości  {string.Join(",",allowedSortByColumnNames)}");
         }
     }
 }
