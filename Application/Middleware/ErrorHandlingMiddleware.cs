@@ -45,6 +45,10 @@ namespace Application.Middleware
             {
                 context.Response.StatusCode = 403;
                 await context.Response.WriteAsync(wrongPassword.Message);
+            }catch(OutOfStoreException outofStore)
+            {
+                context.Response.StatusCode = 400;
+                await context.Response.WriteAsync(outofStore.Message);
             }
             catch(BadRequestException badRequest)
             {

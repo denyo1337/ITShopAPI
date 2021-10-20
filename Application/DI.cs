@@ -20,10 +20,13 @@ namespace Application
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddScoped<ErrorHandlingMiddleware>();
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+            services.AddScoped<IUserContextService, UserContextService>();
+
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IAdminService, AdminService>();
             services.AddScoped<IProductService, ProductService>();
-            services.AddScoped<IUserContextService, UserContextService>();
+            services.AddScoped<IOrderService, OrderService>();
+
             return services;
         }
     }

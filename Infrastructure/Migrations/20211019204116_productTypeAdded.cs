@@ -2,7 +2,7 @@
 
 namespace Infrastructure.Migrations
 {
-    public partial class addedProductTableAndImagesTable3 : Migration
+    public partial class productTypeAdded : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

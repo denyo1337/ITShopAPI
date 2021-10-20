@@ -4,14 +4,16 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ITShopDbContext))]
-    partial class ITShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211020170309_testforOrders333")]
+    partial class testforOrders333
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,7 +112,7 @@ namespace Infrastructure.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrderId")
+                    b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProductId")
@@ -263,13 +265,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.OrderAmountProducts", b =>
                 {
-                    b.HasOne("Domain.Entities.Order", "Order")
+                    b.HasOne("Domain.Entities.Order", null)
                         .WithMany("OrderAmountProducts")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
+                        .HasForeignKey("OrderId");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>

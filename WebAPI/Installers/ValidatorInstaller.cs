@@ -1,4 +1,5 @@
 ﻿using Application.DTOs;
+using Application.DTOs.OrderDtos;
 using Application.DTOs.ProductDtos.ProductDto;
 using Domain.Common;
 using FluentValidation;
@@ -25,6 +26,7 @@ namespace WebAPI.Installers
             services.AddScoped<IValidator<ProductDto>, ProductDtoValidator>();
             services.AddScoped<IValidator<UpdateProductDto>, UpdateProductDtoValidator>();
             services.AddScoped<IValidator<ProductsQuery>, ProductsQueryValidator>();
+            services.AddScoped<IValidator<CreateOrderDto>, CreateOrderDtoValidator>();
         }
     }
 }

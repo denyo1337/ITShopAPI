@@ -73,8 +73,8 @@ namespace WebAPI.Controllers
         }
         [HttpDelete]
         [Authorize]
-        [SwaggerOperation(Summary ="Umożliwia 'usunięcie konta', zmienia status konta isActive=false")]
-        public async Task<IActionResult> DeleteMyAccount([FromBody] DeactivateAccountDto dto )
+        [SwaggerOperation(Summary = "Umożliwia 'usunięcie konta', zmienia status konta isActive=false")]
+        public async Task<IActionResult> DeleteMyAccount([FromBody] DeactivateAccountDto dto)
         {
             await _service.DeactivateAccount(dto);
             return NoContent();

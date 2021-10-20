@@ -68,8 +68,17 @@ namespace Infrastructure.Repositories
 
         public async Task UpdateAccountDetails(User user)
         {
-            _context.Users.Update(user);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Users.Update(user);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
+            
         }
 
         public async Task SetIsActiveToFalse(int id)
