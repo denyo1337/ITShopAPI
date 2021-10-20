@@ -16,12 +16,19 @@ namespace WebAPI.Controllers
         {
             _service = repository;
         }
+        [HttpGet("{orderId}")]
+        [Authorize(Roles ="Admin, Employee")]
+        public async Task<IActionResult> GetOrderById([FromRoute] int orderId)
+        {
+            var order = await _service.GetOrder(orderId);
+            return Ok(order);
+        }
         [HttpPost("create")]
         [Authorize]
         public async Task<IActionResult> CreateOrder([FromBody]CreateOrderDto dto)
         {
             var orderId = await _service.AddOrder(dto);
-            return Ok(orderId);
+            return Created($"api/orders/{orderId}",null);
         }
     }
 }

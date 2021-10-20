@@ -11,5 +11,6 @@ namespace Domain.Interfaces
     {
         Task<IEnumerable<Product>> GetProductAmount();
         Task UpdateStates(Order order, IEnumerable<Product> product );
+        Task<Order> GetOrder(int orderId);
     }
 }

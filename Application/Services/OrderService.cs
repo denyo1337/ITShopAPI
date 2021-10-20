@@ -65,6 +65,14 @@ namespace Application.Services
 
             return newOrder.Id;
         }
+
+        public async Task<OrderDto> GetOrder(int orderId)
+        {
+            var order = await _repository.GetOrder(orderId);
+            if (order == null)
+                throw new NotFoundException($"Zamówienie o id {orderId} nie istnieje");
+            return _mapper.Map<OrderDto>(order);
+        }
     }
 }
 

@@ -19,6 +19,14 @@ namespace Infrastructure.Repositories
             _context = context;
         }
 
+        public Task<Order> GetOrder(int orderId)
+        {
+            return _context.Orders
+                .Include(x => x.OrderAmountProducts)
+                .Include(x => x.Address)
+                .FirstOrDefaultAsync(x => x.Id == orderId);
+        }
+
         public async Task<IEnumerable<Product>> GetProductAmount()
         {
             return await _context.Products.ToListAsync();
@@ -26,11 +34,8 @@ namespace Infrastructure.Repositories
 
         public async Task UpdateStates(Order order, IEnumerable<Product> product)
         {
-            
-                _context.Orders.Add(order);
-                await _context.SaveChangesAsync();
-           
-         
+            _context.Orders.Add(order);
+            await _context.SaveChangesAsync();
         }
     }
 }

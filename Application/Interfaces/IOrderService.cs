@@ -10,5 +10,6 @@ namespace Application.Interfaces
     public interface IOrderService
     {
         Task<int> AddOrder(CreateOrderDto dto);
+        Task<OrderDto> GetOrder(int orderId);
     }
 }
