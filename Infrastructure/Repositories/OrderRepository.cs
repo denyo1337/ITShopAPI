@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Domain.Common;
+using Domain.Entities;
 using Domain.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,13 @@ namespace Infrastructure.Repositories
                 .Include(x => x.OrderAmountProducts)
                 .Include(x => x.Address)
                 .FirstOrDefaultAsync(x => x.Id == orderId);
+        }
+
+        public async Task<IEnumerable<Order>> GetOrders(OrdersQuery query)
+        {
+            return await _context.Orders
+                .Include(x => x.OrderAmountProducts)
+                .ToListAsync(); 
         }
 
         public async Task<IEnumerable<Product>> GetProductAmount()

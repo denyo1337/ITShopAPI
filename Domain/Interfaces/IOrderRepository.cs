@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Domain.Common;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,6 @@ namespace Domain.Interfaces
         Task<IEnumerable<Product>> GetProductAmount();
         Task UpdateStates(Order order, IEnumerable<Product> product );
         Task<Order> GetOrder(int orderId);
+        Task<IEnumerable<Order>> GetOrders(OrdersQuery query);
     }
 }
