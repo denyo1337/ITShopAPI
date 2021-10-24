@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.OrderDtos;
+using Domain.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace Application.Interfaces
     {
         Task<int> AddOrder(CreateOrderDto dto);
         Task<OrderDto> GetOrder(int orderId);
+        Task<IEnumerable<ListOfOrdersDto>> GetOrdersList(OrdersQuery query);
     }
 }

@@ -2,6 +2,7 @@
 using Application.Exceptions;
 using Application.Interfaces;
 using AutoMapper;
+using Domain.Common;
 using Domain.Entities;
 using Domain.Interfaces;
 using System;
@@ -72,6 +73,22 @@ namespace Application.Services
             if (order == null)
                 throw new NotFoundException($"Zamówienie o id {orderId} nie istnieje");
             return _mapper.Map<OrderDto>(order);
+        }
+
+        public async Task<IEnumerable<ListOfOrdersDto>> GetOrdersList(OrdersQuery query)
+        {
+            var orders = await _repository.GetOrders(query);
+
+            if (orders.Count() == 0)
+                throw new NotFoundException("Pusta lista zamówień");
+
+            orders = orders.OrderBy(x => x.DateOrdered);
+
+            var ordersBase =  orders.Skip(query.PageSize * (query.PageNumber - 1))
+                .Take(query.PageSize);
+
+
+            return _mapper.Map<IEnumerable<ListOfOrdersDto>>(ordersBase);
         }
     }
 }

@@ -27,6 +27,7 @@ namespace WebAPI.Installers
             services.AddScoped<IValidator<UpdateProductDto>, UpdateProductDtoValidator>();
             services.AddScoped<IValidator<ProductsQuery>, ProductsQueryValidator>();
             services.AddScoped<IValidator<CreateOrderDto>, CreateOrderDtoValidator>();
+            services.AddScoped<IValidator<OrdersQuery>, OrdersQueryValidator>();
         }
     }
 }
