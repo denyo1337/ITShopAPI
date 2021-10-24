@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31613.86
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31815.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{A506A665-F185-4053-92DC-8A7C6B4E1094}"
 EndProject
@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{B5940087-E12A-4444-9611-ECED5CB19621}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{F3AB32EF-21CD-4E23-9DDE-185D13CFAA8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{F3AB32EF-21CD-4E23-9DDE-185D13CFAA8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{2AFDB2A0-0151-4D52-A65C-9EBCB91C7DC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{2AFDB2A0-0151-4D52-A65C-9EBCB91C7DC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{F70572C9-455E-4D61-B9BE-1ADC2CF9D7D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{2AFDB2A0-0151-4D52-A65C-9EBCB91C7DC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AFDB2A0-0151-4D52-A65C-9EBCB91C7DC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AFDB2A0-0151-4D52-A65C-9EBCB91C7DC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F70572C9-455E-4D61-B9BE-1ADC2CF9D7D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F70572C9-455E-4D61-B9BE-1ADC2CF9D7D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F70572C9-455E-4D61-B9BE-1ADC2CF9D7D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F70572C9-455E-4D61-B9BE-1ADC2CF9D7D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +50,7 @@ Global
 		{B5940087-E12A-4444-9611-ECED5CB19621} = {A506A665-F185-4053-92DC-8A7C6B4E1094}
 		{F3AB32EF-21CD-4E23-9DDE-185D13CFAA8E} = {A506A665-F185-4053-92DC-8A7C6B4E1094}
 		{2AFDB2A0-0151-4D52-A65C-9EBCB91C7DC4} = {A506A665-F185-4053-92DC-8A7C6B4E1094}
+		{F70572C9-455E-4D61-B9BE-1ADC2CF9D7D4} = {A506A665-F185-4053-92DC-8A7C6B4E1094}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {10880B1E-EE67-4DA8-894B-F58C3C646122}
