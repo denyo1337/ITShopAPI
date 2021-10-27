@@ -8,6 +8,9 @@ using WebAPI;
 using System.Threading.Tasks;
 using FluentAssertions;
 using System.Net.Http;
+using Microsoft.EntityFrameworkCore;
+using Infrastructure.Data;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Tests
 {
@@ -16,7 +19,19 @@ namespace Tests
         private HttpClient _client;
         public ProductControllerTests(WebApplicationFactory<Startup> factory)
         {
-            _client = factory.CreateClient();
+            _client = factory
+                .WithWebHostBuilder(builder =>
+                    {
+                        builder.ConfigureServices(services =>
+                        {
+                           var dbContextOptions = services.SingleOrDefault(service => service.ServiceType == typeof(DbContextOptions<ITShopDbContext>));
+                            services.Remove(dbContextOptions);
+
+                            services.AddDbContext<ITShopDbContext>(opt =>opt.UseInMemoryDatabase("ItshopDB"));
+                        });
+                    }
+                )
+                .CreateClient();
         }
 
         [Theory]
@@ -30,7 +45,6 @@ namespace Tests
             var response = await _client.GetAsync($"/api/Product?PageSize={pageSize}&pageNumber={pageNumber}");
             //assert
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
-
         }
         [Theory]
         [InlineData(1, 1)]
