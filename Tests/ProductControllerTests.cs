@@ -11,13 +11,11 @@ using System.Net.Http;
 
 namespace Tests
 {
-    public class ProductControllerTests
+    public class ProductControllerTests : IClassFixture<WebApplicationFactory<Startup>>
     {
         private HttpClient _client;
-
-        public ProductControllerTests()
+        public ProductControllerTests(WebApplicationFactory<Startup> factory)
         {
-            var factory = new WebApplicationFactory<Startup>();
             _client = factory.CreateClient();
         }
 
@@ -28,8 +26,6 @@ namespace Tests
         [InlineData(50,1)]
         public async Task GetAll_WithQueryParameters_ReturnsOkResultAsync(int pageSize, int pageNumber)
         {
-
-
             //act
             var response = await _client.GetAsync($"/api/Product?PageSize={pageSize}&pageNumber={pageNumber}");
             //assert
@@ -44,7 +40,6 @@ namespace Tests
         [InlineData(0,0)]
         public async Task GetAll_WithInvalidQueryParameters_ReturnsBadRequestStatus(int pageSize, int pageNumber)
         {
-
             //act
             var response = await _client.GetAsync($"/api/Product?PageSize={pageSize}&pageNumber={pageNumber}");
             //assert

@@ -52,32 +52,32 @@ namespace Tests
 
         }
         //proper way
-        [Fact]
-        public async Task RegisterUserWithProperDto()
-        {
-            //Arrange
-            var dto = new RegisterUserDto()
-            {
-                Email = "admin2@gmail.com",
-                BirthDay = DateTime.Now.ToLocalTime(),
-                Password = "password",
-                ConfirmPassword = "password",
-                PhoneNumber = 111222333,
-                NickName = "admin2",
-                Name = "teest",
-                SurrName = "test",
-                Nationality = "test"
-            };
-            _accountService.RegisterUser(dto).Returns(Task.CompletedTask);
-            //Act
+        //[Fact]
+        //public async Task RegisterUserWithProperDto()
+        //{
+        //    //Arrange
+        //    var dto = new RegisterUserDto()
+        //    {
+        //        Email = "admin2@gmail.com",
+        //        BirthDay = DateTime.Now.ToLocalTime(),
+        //        Password = "password",
+        //        ConfirmPassword = "password",
+        //        PhoneNumber = 111222333,
+        //        NickName = "admin2",
+        //        Name = "teest",
+        //        SurrName = "test",
+        //        Nationality = "test"
+        //    };
+        //    _accountService.RegisterUser(dto).Returns(Task.CompletedTask);
+        //    //Act
 
-            var result = await _controller.Register(dto);
+        //    var result = await _controller.Register(dto);
 
-            var okObjectResult = (OkObjectResult)result;
+        //    var okObjectResult = (OkObjectResult)result;
 
-            //Assert
-            okObjectResult.StatusCode.Value.Equals(HttpStatusCode.OK);
-        }
+        //    //Assert
+        //    okObjectResult.StatusCode.Value.Equals(HttpStatusCode.OK);
+        //}
         
     }
 }
