@@ -11,7 +11,7 @@ namespace Infrastructure.Data
 {
     public class ITShopDbContext : DbContext
     {
-        public ITShopDbContext(DbContextOptions options):base(options)
+        public ITShopDbContext(DbContextOptions options) : base(options)
         {
 
         }
@@ -22,6 +22,8 @@ namespace Infrastructure.Data
         public DbSet<Image> Images { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderAmountProducts> OrderAmountProducts { get; set; }
+        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
         }

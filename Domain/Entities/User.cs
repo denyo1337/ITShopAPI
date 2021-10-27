@@ -30,5 +30,6 @@ namespace Domain.Entities
         public bool IsBanned { get; set; }
         [DefaultValue("true")]
         public bool IsActive { get; set; }
+
     }
 }
