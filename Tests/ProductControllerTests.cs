@@ -11,6 +11,11 @@ using System.Net.Http;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Data;
 using Microsoft.Extensions.DependencyInjection;
+using Application.DTOs.ProductDtos.ProductDto;
+using Application.DTOs.Enums;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization.Policy;
+using Tests.Helpers;
 
 namespace Tests
 {
@@ -28,6 +33,8 @@ namespace Tests
                             services.Remove(dbContextOptions);
 
                             services.AddDbContext<ITShopDbContext>(opt =>opt.UseInMemoryDatabase("ItshopDB"));
+
+                            services.AddSingleton<IPolicyEvaluator, FakePolicyEvaluator>();
                         });
                     }
                 )
@@ -58,6 +65,33 @@ namespace Tests
             var response = await _client.GetAsync($"/api/Product?PageSize={pageSize}&pageNumber={pageNumber}");
             //assert
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
+        }
+
+        [Fact]
+        public async Task AddProduct_WithValidModel_ReturnsCreatedStatusCode()
+        {
+            //arrange
+            var model = new ProductDto()
+            {
+                Amount = 10,
+                Description = "Some Description",
+                Name = "Dysk twardy",
+                Price = 599,
+                ProductType = ProductTypeEnum.Hardware.ToString()
+            };
+
+            var httpContent = new StringContent(
+                JsonConvert.SerializeObject(model),
+                UnicodeEncoding.UTF8,
+                "application/json");
+
+            //act
+            var response = await _client
+                .PostAsync("/api/Product/add", httpContent);
+
+            //arrange
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
+            response.Headers.Location.Should().NotBeNull();
         }
     }
 }
