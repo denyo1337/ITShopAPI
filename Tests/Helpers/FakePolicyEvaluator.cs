@@ -12,6 +12,13 @@ namespace Tests.Helpers
         public Task<AuthenticateResult> AuthenticateAsync(AuthorizationPolicy policy, HttpContext context)
         {
             var claimsPrinciple = new ClaimsPrincipal();
+
+            claimsPrinciple.AddIdentity(new ClaimsIdentity(new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, "1"), 
+                new Claim(ClaimTypes.Role,"Admin") //Dodanie claimów odpowiednich dla innych akcji admina
+            })); 
+
             var ticket = new AuthenticationTicket(claimsPrinciple, "Test");
 
             AuthenticateResult result = AuthenticateResult.Success(ticket);
