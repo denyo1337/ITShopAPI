@@ -34,6 +34,8 @@ namespace Tests
 
                             services.AddDbContext<ITShopDbContext>(opt =>opt.UseInMemoryDatabase("ItshopDB"));
 
+                            services.AddMvc(opt => opt.Filters.Add(new FakeUserFilter())); // fake user filter added 
+
                             services.AddSingleton<IPolicyEvaluator, FakePolicyEvaluator>();
                         });
                     }
