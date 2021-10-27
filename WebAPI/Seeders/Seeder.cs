@@ -24,11 +24,15 @@ namespace WebAPI
         {
             if (_context.Database.CanConnect())
 {
-                var pendingMigrations = _context.Database.GetPendingMigrations();
-                if (pendingMigrations != null && pendingMigrations.Any())
+                if (_context.Database.IsRelational())
                 {
-                    _context.Database.Migrate();
+                    var pendingMigrations = _context.Database.GetPendingMigrations();
+                    if (pendingMigrations != null && pendingMigrations.Any())
+                    {
+                        _context.Database.Migrate();
+                    }
                 }
+
                 if (!_context.Roles.Any())
                 {
                     var roles = GetRoles();
