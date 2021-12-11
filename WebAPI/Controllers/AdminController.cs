@@ -28,6 +28,7 @@ namespace WebAPI.Controllers
         {
             return Ok(await _service.GetUsers());
         }
+
         [HttpGet("users/{id}")]
         [SwaggerOperation(Summary = "Pobieranie użytkownika po Id")]
         public async Task<IActionResult> GetUserById([FromRoute] int id)
