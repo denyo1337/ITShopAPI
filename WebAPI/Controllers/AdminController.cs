@@ -22,6 +22,7 @@ namespace WebAPI.Controllers
         {
             _service = service;
         }
+
         [HttpGet("users")]
         [SwaggerOperation(Summary = "Admin może pobrać listę wszystkich użytkowników i ich adresów.")]
         public async Task<IActionResult> GetUsers()
